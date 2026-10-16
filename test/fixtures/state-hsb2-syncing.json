@@ -1,0 +1,113 @@
+{
+  "device": {
+    "name": "Living room box",
+    "deviceType": "HSB2",
+    "uniqueId": "C42996000777",
+    "apiLevel": 14,
+    "firmwareVersion": "2.6.0",
+    "buildNumber": 1987654321,
+    "wifiState": "wan",
+    "ipAddress": "192.168.1.31",
+    "wifi": {
+      "ssid": "Home",
+      "strength": 3
+    },
+    "lastCheckedUpdate": "2026-10-01T03:00:00Z",
+    "updatableBuildNumber": null,
+    "updatableFirmwareVersion": null,
+    "update": {
+      "autoUpdateEnabled": true,
+      "autoUpdateTime": 3
+    },
+    "ledMode": 1,
+    "action": "none",
+    "pushlink": "idle",
+    "temperature": 48,
+    "overheating": false,
+    "undervolt": false,
+    "bluetooth": true,
+    "capabilities": {
+      "maxIrCodes": 24,
+      "maxPresets": 16
+    }
+  },
+  "hue": {
+    "bridgeUniqueId": "001788FFFE000001",
+    "bridgeIpAddress": "192.168.1.8",
+    "groupId": "7",
+    "operatingMode": "bridge",
+    "groups": {
+      "7": {
+        "name": "Living room",
+        "numLights": 3,
+        "active": true,
+        "owner": "Hue Sync Box"
+      },
+      "8": {
+        "name": "Bedroom",
+        "numLights": 2,
+        "active": false
+      }
+    },
+    "connectionState": "streaming"
+  },
+  "execution": {
+    "mode": "game",
+    "syncActive": true,
+    "hdmiActive": true,
+    "hdmiSource": "input2",
+    "hueTarget": "groups/7",
+    "brightness": 160,
+    "lastSyncMode": "game",
+    "video": {
+      "intensity": "subtle",
+      "backgroundLighting": false
+    },
+    "game": {
+      "intensity": "intense",
+      "backgroundLighting": true
+    },
+    "music": {
+      "intensity": "moderate",
+      "palette": "happyEnergetic"
+    },
+    "preset": null
+  },
+  "hdmi": {
+    "input1": {
+      "name": "Apple TV",
+      "type": "appletv",
+      "status": "linked",
+      "lastSyncMode": "video"
+    },
+    "input2": {
+      "name": "PlayStation",
+      "type": "playstation",
+      "status": "linked",
+      "lastSyncMode": "game"
+    },
+    "input3": {
+      "name": "HDMI 3",
+      "type": "generic",
+      "status": "unplugged",
+      "lastSyncMode": "video"
+    },
+    "input4": {
+      "name": "HDMI 4",
+      "type": "generic",
+      "status": "unplugged",
+      "lastSyncMode": "video"
+    },
+    "output": {
+      "name": "TV",
+      "type": "tv",
+      "status": "linked",
+      "lastSyncMode": "game"
+    },
+    "contentSpecs": "3840 x 2160 @ 120000 - HDR10",
+    "videoSyncSupported": true,
+    "audioSyncSupported": true
+  },
+  "registrations": {},
+  "presets": {}
+}

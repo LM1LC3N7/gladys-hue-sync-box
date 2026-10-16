@@ -1,177 +1,482 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "Demo Devices Template",
+  "name": "Philips Hue Sync Box",
   "description": {
-    "en": "Starter template showing sensors, a switch, a dimmable light and a smart plug.",
-    "fr": "Template de démarrage : capteurs, interrupteur, lampe variable et prise connectée."
+    "en": "Unofficial connector: Philips Hue Play HDMI Sync Box, on the local network.",
+    "fr": "Connecteur non officiel : Philips Hue Play HDMI Sync Box, en réseau local."
   },
-  "version": "1.0.0",
-  "docker_image": "ghcr.io/gladysassistant/integration-template-js:1.0.0",
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/lm1lc3n7/gladys-hue-sync-box:0.1.0",
   "gladys_version": ">=5.1.0",
-  "cover_image": "https://raw.githubusercontent.com/GladysAssistant/integration-template-js/master/cover.png",
-  "categories": ["lighting", "security", "environment"],
-  "transports": ["local", "cloud"],
+  "cover_image": "https://raw.githubusercontent.com/LM1LC3N7/gladys-hue-sync-box/main/cover.png",
+  "categories": ["lighting", "multimedia"],
+  "transports": ["local"],
+  "network_discovery": [{ "type": "mdns", "service": "_huesync._tcp" }],
   "config_schema": [
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "Hue Sync Box in Gladys",
+        "fr": "La Hue Sync Box dans Gladys"
+      },
       "description": {
-        "en": "The demo weather station reads real data from the free Open-Meteo API: pick the coordinates to observe. No account, no API key.",
-        "fr": "La station météo de démonstration lit de vraies données via l'API gratuite Open-Meteo : choisissez les coordonnées à observer. Pas de compte, pas de clé d'API."
+        "en": "Unofficial connector, not affiliated with Signify (Philips Hue). It drives the Philips Hue Play HDMI Sync Box on the local network through its official local API, without any account: power, light sync, mode, intensity, brightness, HDMI input and entertainment area, with scene triggers and actions. 1. Click \"Register a Sync Box\" below, then hold the button on the front of the box for about 3 seconds, until its light blinks green. 2. Open Discovery and add the box. Boxes on another network: type their address below.",
+        "fr": "Connecteur non officiel, sans lien avec Signify (Philips Hue). Il pilote la Philips Hue Play HDMI Sync Box en réseau local par son API locale officielle, sans compte : marche, synchronisation des lumières, mode, intensité, luminosité, entrée HDMI et zone de divertissement, avec des déclencheurs et des actions de scène. 1. Cliquez sur « Enregistrer une Sync Box » ci-dessous, puis maintenez le bouton à l'avant du boîtier environ 3 secondes, jusqu'à ce que son voyant clignote en vert. 2. Ouvrez Découverte et ajoutez le boîtier. Boîtiers sur un autre réseau : saisissez leur adresse ci-dessous."
       },
       "links": [
         {
-          "url": "https://open-meteo.com/en/docs",
-          "label": { "en": "Open-Meteo documentation", "fr": "Documentation Open-Meteo" }
+          "url": "https://github.com/LM1LC3N7/gladys-hue-sync-box/blob/main/docs/fr.md",
+          "label": { "en": "Guide (French)", "fr": "Guide (français)" }
+        },
+        {
+          "url": "https://github.com/LM1LC3N7/gladys-hue-sync-box/blob/main/docs/en.md",
+          "label": { "en": "Guide (English)", "fr": "Guide (anglais)" }
         }
       ]
     },
     {
-      "key": "latitude",
-      "type": "number",
-      "label": { "en": "Latitude", "fr": "Latitude" },
-      "description": {
-        "en": "Latitude used for the demo weather sensor.",
-        "fr": "Latitude utilisée par le capteur météo de démonstration."
+      "key": "hosts",
+      "type": "string",
+      "label": {
+        "en": "Box addresses (if not found automatically)",
+        "fr": "Adresses des boîtiers (s'ils ne sont pas trouvés)"
       },
-      "placeholder": { "en": "e.g. 48.8566", "fr": "ex. 48.8566" },
-      "required": true,
-      "default": 48.8566,
-      "min": -90,
-      "max": 90
-    },
-    {
-      "key": "longitude",
-      "type": "number",
-      "label": { "en": "Longitude", "fr": "Longitude" },
       "description": {
-        "en": "Longitude used for the demo weather sensor.",
-        "fr": "Longitude utilisée par le capteur météo de démonstration."
-      },
-      "placeholder": { "en": "e.g. 2.3522", "fr": "ex. 2.3522" },
-      "required": true,
-      "default": 2.3522,
-      "min": -180,
-      "max": 180
-    },
-    {
-      "key": "unit",
-      "type": "select",
-      "label": { "en": "Temperature unit", "fr": "Unité de température" },
-      "required": false,
-      "default": "celsius",
-      "options": [
-        { "value": "celsius", "label": { "en": "Celsius", "fr": "Celsius" } },
-        { "value": "fahrenheit", "label": { "en": "Fahrenheit", "fr": "Fahrenheit" } }
-      ]
-    },
-    {
-      "key": "poll_frequency",
-      "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
-      "description": {
-        "en": "How often sensors are polled, in seconds (one minute minimum).",
-        "fr": "Fréquence d'interrogation des capteurs, en secondes (une minute minimum)."
+        "en": "IP addresses or host names, separated by commas. Only needed for the boxes the network scan does not find (multicast blocked, another network). The Hue Sync app shows the address (Settings → Device). Give the box a fixed address in your router.",
+        "fr": "Adresses IP ou noms d'hôte, séparés par des virgules. Utile seulement pour les boîtiers que la recherche réseau ne trouve pas (multicast bloqué, autre réseau). L'application Hue Sync affiche l'adresse (Paramètres → Appareil). Donnez au boîtier une adresse fixe dans votre box."
       },
       "required": false,
-      "default": 300,
-      "min": 60,
-      "max": 3600
+      "default": "",
+      "placeholder": { "en": "192.168.1.30", "fr": "192.168.1.30" }
+    },
+    {
+      "key": "poll_interval",
+      "type": "number",
+      "label": {
+        "en": "Refresh interval (seconds)",
+        "fr": "Intervalle de rafraîchissement (secondes)"
+      },
+      "description": {
+        "en": "How often the state of each box is read (the API has no push). Changes made in the Hue Sync app, with the TV remote or by the box itself show up in Gladys within this time.",
+        "fr": "Fréquence de lecture de l'état de chaque boîtier (l'API n'envoie rien d'elle-même). Les changements faits dans l'application Hue Sync, à la télécommande de la TV ou par le boîtier lui-même apparaissent dans Gladys dans ce délai."
+      },
+      "required": false,
+      "default": 5,
+      "min": 2,
+      "max": 60
     }
   ],
   "actions": [
     {
-      "key": "test_weather",
-      "label": { "en": "Test the weather provider", "fr": "Tester le fournisseur météo" },
-      "timeout_seconds": 30
-    },
-    {
-      "key": "identify",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
+      "key": "register",
+      "timeout_seconds": 120,
+      "label": { "en": "Register a Sync Box", "fr": "Enregistrer une Sync Box" },
+      "description": {
+        "en": "Click, then within a minute hold the button on the front of the box for about 3 seconds, until its light blinks green. Every box found that is not registered yet is waiting for its button.",
+        "fr": "Cliquez, puis dans la minute maintenez le bouton à l'avant du boîtier environ 3 secondes, jusqu'à ce que son voyant clignote en vert. Chaque boîtier trouvé et pas encore enregistré attend l'appui sur son bouton."
+      },
       "fields": [
         {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
+          "key": "address",
+          "type": "string",
+          "required": false,
+          "label": {
+            "en": "Address of the box (empty: the boxes found)",
+            "fr": "Adresse du boîtier (vide : les boîtiers trouvés)"
+          },
+          "placeholder": { "en": "192.168.1.30", "fr": "192.168.1.30" }
         }
       ]
+    },
+    {
+      "key": "test_connection",
+      "timeout_seconds": 30,
+      "label": { "en": "Test the boxes", "fr": "Tester les boîtiers" },
+      "description": {
+        "en": "Reads every registered box: model, firmware, mode and input.",
+        "fr": "Lit chaque boîtier enregistré : modèle, micrologiciel, mode et entrée."
+      }
     }
   ],
   "scene_triggers": [
     {
-      "key": "motion_detected",
-      "label": { "en": "Motion detected", "fr": "Mouvement détecté" },
+      "key": "mode_changed",
+      "label": {
+        "en": "Hue Sync Box: mode changed",
+        "fr": "Hue Sync Box : le mode a changé"
+      },
       "description": {
-        "en": "A demo motion sensor saw a person or an animal move.",
-        "fr": "Un détecteur de démonstration a vu bouger une personne ou un animal."
+        "en": "The light sync started or stopped, or the box changed mode or went to power save (Hue Sync app, TV remote, automatic sync). Changes made through Gladys do not fire it.",
+        "fr": "La synchronisation des lumières a démarré ou s'est arrêtée, ou le boîtier a changé de mode ou s'est mis en veille (application Hue Sync, télécommande de la TV, synchro automatique). Les changements faits depuis Gladys ne le déclenchent pas."
       },
       "fields": [
         {
-          "key": "device",
+          "key": "box",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Sensor", "fr": "Détecteur" }
+          "required": false,
+          "label": { "en": "Sync Box (empty: any)", "fr": "Sync Box (vide : toutes)" }
         },
         {
-          "key": "target",
-          "type": "multi_select",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" },
+          "key": "mode",
+          "type": "select",
+          "required": false,
+          "label": { "en": "New mode (empty: any)", "fr": "Nouveau mode (vide : tous)" },
           "options": [
-            { "value": "person", "label": { "en": "Person", "fr": "Personne" } },
-            { "value": "animal", "label": { "en": "Animal", "fr": "Animal" } }
+            { "value": "powersave", "label": { "en": "Power save", "fr": "Veille" } },
+            {
+              "value": "passthrough",
+              "label": { "en": "Passthrough (no sync)", "fr": "Passthrough (sans synchro)" }
+            },
+            { "value": "video", "label": { "en": "Video", "fr": "Vidéo" } },
+            { "value": "music", "label": { "en": "Music", "fr": "Musique" } },
+            { "value": "game", "label": { "en": "Game", "fr": "Jeu" } }
           ]
         }
       ],
       "variables": [
         {
-          "key": "target",
+          "key": "box_name",
           "type": "string",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" }
+          "label": { "en": "Box name", "fr": "Nom du boîtier" }
+        },
+        {
+          "key": "mode",
+          "type": "string",
+          "label": {
+            "en": "New mode (powersave, passthrough, video, music, game)",
+            "fr": "Nouveau mode (powersave, passthrough, video, music, game)"
+          }
+        },
+        {
+          "key": "previous_mode",
+          "type": "string",
+          "label": { "en": "Previous mode", "fr": "Mode précédent" }
+        },
+        {
+          "key": "syncing",
+          "type": "boolean",
+          "label": { "en": "Light sync on", "fr": "Synchro des lumières active" }
+        },
+        {
+          "key": "input_name",
+          "type": "string",
+          "label": { "en": "HDMI input name", "fr": "Nom de l'entrée HDMI" }
         }
+      ]
+    },
+    {
+      "key": "input_changed",
+      "label": {
+        "en": "Hue Sync Box: HDMI input changed",
+        "fr": "Hue Sync Box : l'entrée HDMI a changé"
+      },
+      "description": {
+        "en": "The box switched to another HDMI input (a console or a player turned on, the TV remote, the Hue Sync app). Changes made through Gladys do not fire it.",
+        "fr": "Le boîtier est passé sur une autre entrée HDMI (une console ou un lecteur allumé, la télécommande de la TV, l'application Hue Sync). Les changements faits depuis Gladys ne le déclenchent pas."
+      },
+      "fields": [
+        {
+          "key": "box",
+          "type": "select",
+          "source": "devices",
+          "required": false,
+          "label": { "en": "Sync Box (empty: any)", "fr": "Sync Box (vide : toutes)" }
+        },
+        {
+          "key": "input",
+          "type": "select",
+          "required": false,
+          "label": { "en": "New input (empty: any)", "fr": "Nouvelle entrée (vide : toutes)" },
+          "options": [
+            { "value": "input1", "label": { "en": "HDMI 1", "fr": "HDMI 1" } },
+            { "value": "input2", "label": { "en": "HDMI 2", "fr": "HDMI 2" } },
+            { "value": "input3", "label": { "en": "HDMI 3", "fr": "HDMI 3" } },
+            { "value": "input4", "label": { "en": "HDMI 4", "fr": "HDMI 4" } }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "box_name",
+          "type": "string",
+          "label": { "en": "Box name", "fr": "Nom du boîtier" }
+        },
+        {
+          "key": "input",
+          "type": "string",
+          "label": { "en": "New input (input1-4)", "fr": "Nouvelle entrée (input1-4)" }
+        },
+        {
+          "key": "input_name",
+          "type": "string",
+          "label": { "en": "New input name", "fr": "Nom de la nouvelle entrée" }
+        },
+        {
+          "key": "previous_input",
+          "type": "string",
+          "label": { "en": "Previous input (input1-4)", "fr": "Entrée précédente (input1-4)" }
+        },
+        {
+          "key": "previous_input_name",
+          "type": "string",
+          "label": { "en": "Previous input name", "fr": "Nom de l'entrée précédente" }
+        },
+        { "key": "mode", "type": "string", "label": { "en": "Mode", "fr": "Mode" } }
       ]
     }
   ],
   "scene_actions": [
     {
-      "key": "identify_device",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "description": {
-        "en": "Make a device signal itself (the demo light blinks).",
-        "fr": "Fait se signaler un appareil (la lampe de démonstration clignote)."
+      "key": "start_sync",
+      "label": {
+        "en": "Hue Sync Box: start the light sync",
+        "fr": "Hue Sync Box : lancer la synchro des lumières"
       },
-      "timeout_seconds": 15,
+      "description": {
+        "en": "Starts syncing the lights, in the mode given (empty: the last one), with the optional intensity, input, brightness and entertainment area. A box in power save is turned on.",
+        "fr": "Lance la synchronisation des lumières, dans le mode indiqué (vide : le dernier), avec l'intensité, l'entrée, la luminosité et la zone de divertissement facultatives. Un boîtier en veille est allumé."
+      },
+      "timeout_seconds": 20,
       "fields": [
         {
-          "key": "device",
+          "key": "box",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
+          "required": true,
+          "label": { "en": "Sync Box", "fr": "Sync Box" }
+        },
+        {
+          "key": "mode",
+          "type": "select",
+          "required": false,
+          "label": { "en": "Mode (empty: the last one)", "fr": "Mode (vide : le dernier)" },
+          "options": [
+            { "value": "video", "label": { "en": "Video", "fr": "Vidéo" } },
+            { "value": "music", "label": { "en": "Music", "fr": "Musique" } },
+            { "value": "game", "label": { "en": "Game", "fr": "Jeu" } }
+          ]
+        },
+        {
+          "key": "intensity",
+          "type": "select",
+          "required": false,
+          "label": { "en": "Intensity (empty: unchanged)", "fr": "Intensité (vide : inchangée)" },
+          "options": [
+            { "value": "subtle", "label": { "en": "Subtle", "fr": "Subtile" } },
+            { "value": "moderate", "label": { "en": "Moderate", "fr": "Modérée" } },
+            { "value": "high", "label": { "en": "High", "fr": "Élevée" } },
+            { "value": "intense", "label": { "en": "Intense", "fr": "Intense" } }
+          ]
+        },
+        {
+          "key": "input",
+          "type": "select",
+          "required": false,
+          "label": {
+            "en": "HDMI input (empty: unchanged)",
+            "fr": "Entrée HDMI (vide : inchangée)"
+          },
+          "options": [
+            { "value": "input1", "label": { "en": "HDMI 1", "fr": "HDMI 1" } },
+            { "value": "input2", "label": { "en": "HDMI 2", "fr": "HDMI 2" } },
+            { "value": "input3", "label": { "en": "HDMI 3", "fr": "HDMI 3" } },
+            { "value": "input4", "label": { "en": "HDMI 4", "fr": "HDMI 4" } }
+          ]
+        },
+        {
+          "key": "brightness",
+          "type": "number",
+          "required": false,
+          "min": 0,
+          "max": 100,
+          "label": {
+            "en": "Brightness % (50: as the source; empty: unchanged)",
+            "fr": "Luminosité % (50 : comme la source ; vide : inchangée)"
+          }
+        },
+        {
+          "key": "area",
+          "type": "string",
+          "required": false,
+          "label": {
+            "en": "Entertainment area name (empty: unchanged)",
+            "fr": "Nom de la zone de divertissement (vide : inchangée)"
+          }
         }
       ],
       "outputs": [
         {
-          "key": "signalled",
-          "type": "boolean",
-          "label": { "en": "Device signalled", "fr": "Appareil signalé" }
+          "key": "mode",
+          "type": "string",
+          "label": { "en": "Sync mode", "fr": "Mode de synchro" }
+        },
+        {
+          "key": "input",
+          "type": "string",
+          "label": { "en": "HDMI input (input1-4)", "fr": "Entrée HDMI (input1-4)" }
+        },
+        {
+          "key": "input_name",
+          "type": "string",
+          "label": { "en": "HDMI input name", "fr": "Nom de l'entrée HDMI" }
         }
       ]
-    }
-  ],
-  "widgets": [
+    },
     {
-      "key": "demo_status",
-      "label": { "en": "Demo status", "fr": "État de la démo" },
-      "description": {
-        "en": "Live temperature and plug power, plug connection and observed location.",
-        "fr": "Température et puissance en direct, connexion de la prise, position observée."
+      "key": "stop_sync",
+      "label": {
+        "en": "Hue Sync Box: stop the light sync",
+        "fr": "Hue Sync Box : arrêter la synchro des lumières"
       },
-      "icon": "activity",
-      "action_timeout_seconds": 15
+      "description": {
+        "en": "Stops syncing the lights: the box stays on and passes the image through, or goes to power save.",
+        "fr": "Arrête la synchronisation des lumières : le boîtier reste allumé et laisse passer l'image, ou se met en veille."
+      },
+      "timeout_seconds": 20,
+      "fields": [
+        {
+          "key": "box",
+          "type": "select",
+          "source": "devices",
+          "required": true,
+          "label": { "en": "Sync Box", "fr": "Sync Box" }
+        },
+        {
+          "key": "then",
+          "type": "select",
+          "required": false,
+          "default": "passthrough",
+          "label": { "en": "Then", "fr": "Ensuite" },
+          "options": [
+            {
+              "value": "passthrough",
+              "label": { "en": "Stay on (passthrough)", "fr": "Rester allumé (passthrough)" }
+            },
+            { "value": "powersave", "label": { "en": "Power save", "fr": "Veille" } }
+          ]
+        }
+      ],
+      "outputs": [
+        { "key": "mode", "type": "string", "label": { "en": "New mode", "fr": "Nouveau mode" } }
+      ]
+    },
+    {
+      "key": "switch_input",
+      "label": {
+        "en": "Hue Sync Box: switch the HDMI input",
+        "fr": "Hue Sync Box : changer d'entrée HDMI"
+      },
+      "description": {
+        "en": "Switches the box to another HDMI input.",
+        "fr": "Passe le boîtier sur une autre entrée HDMI."
+      },
+      "timeout_seconds": 20,
+      "fields": [
+        {
+          "key": "box",
+          "type": "select",
+          "source": "devices",
+          "required": true,
+          "label": { "en": "Sync Box", "fr": "Sync Box" }
+        },
+        {
+          "key": "input",
+          "type": "select",
+          "required": true,
+          "label": { "en": "HDMI input", "fr": "Entrée HDMI" },
+          "options": [
+            { "value": "input1", "label": { "en": "HDMI 1", "fr": "HDMI 1" } },
+            { "value": "input2", "label": { "en": "HDMI 2", "fr": "HDMI 2" } },
+            { "value": "input3", "label": { "en": "HDMI 3", "fr": "HDMI 3" } },
+            { "value": "input4", "label": { "en": "HDMI 4", "fr": "HDMI 4" } }
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "key": "input",
+          "type": "string",
+          "label": { "en": "HDMI input (input1-4)", "fr": "Entrée HDMI (input1-4)" }
+        },
+        {
+          "key": "input_name",
+          "type": "string",
+          "label": { "en": "HDMI input name", "fr": "Nom de l'entrée HDMI" }
+        }
+      ]
+    },
+    {
+      "key": "get_state",
+      "label": {
+        "en": "Hue Sync Box: read the state",
+        "fr": "Hue Sync Box : lire l'état"
+      },
+      "description": {
+        "en": "Reads the state of a box now, for a condition or a message that follows.",
+        "fr": "Lit l'état d'un boîtier maintenant, pour une condition ou un message qui suit."
+      },
+      "timeout_seconds": 20,
+      "fields": [
+        {
+          "key": "box",
+          "type": "select",
+          "source": "devices",
+          "required": true,
+          "label": { "en": "Sync Box", "fr": "Sync Box" }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "online",
+          "type": "boolean",
+          "label": { "en": "The box answers", "fr": "Le boîtier répond" }
+        },
+        { "key": "power", "type": "boolean", "label": { "en": "On", "fr": "Allumé" } },
+        {
+          "key": "syncing",
+          "type": "boolean",
+          "label": { "en": "Light sync on", "fr": "Synchro des lumières active" }
+        },
+        {
+          "key": "mode",
+          "type": "string",
+          "label": {
+            "en": "Mode (powersave, passthrough, video, music, game)",
+            "fr": "Mode (powersave, passthrough, video, music, game)"
+          }
+        },
+        {
+          "key": "input",
+          "type": "string",
+          "label": { "en": "HDMI input (input1-4)", "fr": "Entrée HDMI (input1-4)" }
+        },
+        {
+          "key": "input_name",
+          "type": "string",
+          "label": { "en": "HDMI input name", "fr": "Nom de l'entrée HDMI" }
+        },
+        {
+          "key": "brightness",
+          "type": "number",
+          "label": { "en": "Brightness %", "fr": "Luminosité %" }
+        },
+        {
+          "key": "intensity",
+          "type": "string",
+          "label": {
+            "en": "Intensity of the sync mode",
+            "fr": "Intensité du mode de synchro"
+          }
+        },
+        {
+          "key": "area",
+          "type": "string",
+          "label": { "en": "Entertainment area", "fr": "Zone de divertissement" }
+        }
+      ]
     }
   ]
 }
