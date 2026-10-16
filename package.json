@@ -1,6 +1,6 @@
 {
   "name": "gladys-hue-sync-box",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Gladys Assistant external integration for the Philips Hue Play HDMI Sync Box, over its local API. Unofficial, not affiliated with Signify.",
   "type": "module",

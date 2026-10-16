@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-16
+
 ### Added
 
 - One device per Philips Hue Play HDMI Sync Box, over its official local API
@@ -33,4 +35,5 @@ the notes of the version's GitHub Release.
   area), "stop the light sync", "switch the HDMI input" and "read the state".
 - "Test the boxes" button.
 
-[Unreleased]: https://github.com/LM1LC3N7/gladys-hue-sync-box/commits/main
+[Unreleased]: https://github.com/LM1LC3N7/gladys-hue-sync-box/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/LM1LC3N7/gladys-hue-sync-box/releases/tag/v0.1.1
